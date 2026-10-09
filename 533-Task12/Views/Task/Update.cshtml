@@ -1,0 +1,119 @@
+﻿@model TodoTask
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+
+            <!-- Page Title -->
+            <div class="mb-4">
+                <h2 class="fw-bold text-primary">
+                    <i class="bi bi-plus-circle me-2"></i>
+                    Edit Task
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Update in the details below to create a new task.
+                </p>
+            </div>
+
+            <!-- Create Task Card -->
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4 p-md-5">
+
+                    <form asp-action="Update" method="post" enctype="multipart/form-data">
+
+                        <!-- Title -->
+                        <div class="mb-4">
+                            <label asp-for="Title"
+                                   class="form-label fw-semibold">
+                                Task Title
+                            </label>
+
+                            <input name="Title"
+                                   class="form-control form-control-lg"
+                                   placeholder="Enter task title" value="@Model.Title"/>
+
+                            <span asp-validation-for="Title"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <label asp-for="Description"
+                                   class="form-label fw-semibold">
+                                Description
+                            </label>
+
+                            <textarea asp-for="Description"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Describe your task..."></textarea>
+
+                            <span asp-validation-for="Description"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <!-- Deadline -->
+                        <div class="mb-4">
+                             <label asp-for="Deadline"
+                                    class="form-label fw-semibold">
+                                 Deadline
+                             </label>
+
+                             <input asp-for="Deadline"
+                                    type="datetime-local"
+                                    min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")"
+                                    class="form-control form-control-lg" />
+
+                             <span asp-validation-for="Deadline"
+                                   class="text-danger small"></span>
+                        </div>
+
+                        <!-- File -->
+                        <div class="mb-4">
+                            <label for="UploadedFile"
+                                   class="form-label fw-semibold">
+                                Attachment
+                            </label>
+
+                            <input type="file"
+                                   id="ImageFile"
+                                   name="ImageFile"
+                                   class="form-control form-control-lg" />
+
+                            <div class="form-text">
+                                Attach a file related to your task.
+                            </div>
+                        </div>
+
+                         @* عرض الملف *@
+                         <a href="~/images/@Model.File" target="_blank">
+                          <i class="bi bi-eye">@Model.File</i>
+                         </a>
+
+
+                        <hr class="my-4" />
+
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-between gap-3">
+                            <a asp-action="Index"
+                               class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-arrow-left me-1"></i>
+                                Back
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-primary px-4">
+                                <i class="bi bi-check-circle me-1"></i>
+                                Save Task
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,380 @@
+﻿@model IEnumerable<TodoTask>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Page Title -->
+    <title>My Tasks</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/Task/index.css">
+</head>
+
+<body>
+
+    <!-- Main Tasks Page -->
+    <main class="tasks-page">
+
+        <!-- Main Content Container -->
+        <div class="container-fluid tasks-container">
+
+            <!-- Page Header -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+
+                <!-- Page Title and Description -->
+                <div>
+                    <h2 class="page-heading mb-2">
+                        <i class="bi bi-list-check"></i>
+                        My Tasks
+                    </h2>
+
+                    <p class="page-subtitle mb-0">
+                        Organize your work and stay on top of your deadlines.
+                    </p>
+                </div>
+
+                <!-- Add Task Button -->
+                <a asp-controller="Task"
+                   asp-action="Create"
+                   class="btn btn-primary btn-add-task">
+                    <i class="bi bi-plus-lg me-2"></i>
+                    Add New Task
+                </a>
+
+            </div>
+
+
+            <!-- Tasks Table Card -->
+            <div class="card task-card">
+
+                <!-- Search Toolbar -->
+                <div class="task-toolbar">
+
+                    <div class="row g-3 align-items-end">
+
+                        <!-- Search Date Input -->
+                        <form asp-controller="Task" asp-action="Index" method="get">
+                            <div class="row g-3 align-items-end">
+
+                                <!-- Search Date Input -->
+                                <div class="col-12 col-md-5">
+                                    <label for="DeadFilter" class="form-label fw-semibold">
+                                        <i class="bi bi-calendar3 me-1 text-primary"></i>
+                                        Search by Deadline
+                                    </label>
+
+                                    <input name="DeadFilter"
+                                           type="date"
+                                           id="DeadFilter"
+                                           class="form-control search-input">
+                                </div>
+
+                                <!-- Search Button -->
+                                <div class="col-12 col-md-auto">
+                                    <button type="submit"
+                                            class="btn btn-primary px-4 w-100">
+                                        <i class="bi bi-search me-1"></i>
+                                        Search
+                                    </button>
+                                </div>
+
+                                <!-- Reset Button -->
+                                <div class="col-12 col-md-auto">
+                                    <a asp-controller="Task"
+                                       asp-action="Index"
+                                       class="btn btn-light border px-3 w-100">
+                                        <i class="bi bi-arrow-counterclockwise me-1"></i>
+                                        Reset
+                                    </a>
+                                </div>
+
+                            </div>
+                        </form>
+
+                        <!-- Search and Reset Buttons -->
+                       
+
+                        <!-- Sorting Information -->
+                        <div class="col-12 col-md text-md-end">
+                            <span class="text-secondary small">
+                                <i class="bi bi-sort-down me-1 text-primary"></i>
+                                Earliest deadline first
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Responsive Tasks Table -->
+                <div class="table-responsive">
+
+                    <table class="table task-table align-middle">
+
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Deadline</th>
+                                <th>File</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <!-- Tasks Data -->
+                        <tbody id="tasksTableBody">
+
+                            @foreach (var item in Model)
+                            {
+                                <tr data-deadline="@item.Deadline.ToString("yyyy-MM-dd")">
+
+                                    <!-- Task Title -->
+                                    <td>
+                                        <div class="task-title">@item.Title</div>
+                                    </td>
+
+                                    <!-- Task Description -->
+                                    <td>
+                                        <div class="task-description">
+                                            @item.Description
+                                        </div>
+                                    </td>
+
+                                    <!-- Task Deadline -->
+                                    @if (item.Deadline <= DateTime.Now.AddHours(24))
+                                    {
+                                        <td class="text-danger fw-bold">
+                                            @item.Deadline.ToString("yyyy-MM-dd hh:mm tt")
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            @item.Deadline.ToString("yyyy-MM-dd hh:mm tt")
+                                        </td>
+                                    }
+
+                                    <!-- Task File -->
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.File))
+                                        {
+                                            <a href="~/images/@item.File" target="_blank">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+
+                                            <br />
+                                            <br />
+
+                                            <a href="~/images/@item.File" download="@item.File">
+                                                <i class="bi bi-download"></i>
+                                            </a>
+                                        }
+                                    </td>
+
+                                    <!-- Task Actions -->
+                                    <td>
+                                        <div class="action-buttons">
+
+                                            <!-- Edit Task Button -->
+                                            <a asp-controller="Task"
+                                               asp-action="Update"
+                                               asp-route-id="@item.Id"
+                                               class="btn btn-sm btn-outline-primary edit-button"
+                                               title="Update"
+                                               aria-label="Edit task">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+
+                                            <!-- Delete Task Button -->
+                                            <a asp-controller="Task"
+                                               asp-action="Delete"
+                                               asp-route-id="@item.Id"
+                                               class="btn btn-sm btn-outline-danger delete-button"
+                                               title="Delete"
+                                               aria-label="Delete task"
+                                               onclick="confirmDelete(event, this)">
+                                                <i class="bi bi-trash3"></i>
+                                            </a>
+
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty Search Result -->
+                <div id="emptyMessage" class="table-empty d-none">
+                    <i class="bi bi-calendar-x fs-1 d-block mb-3"></i>
+                    <h5 class="fw-bold">No Tasks Found</h5>
+                    <p class="mb-0">
+                        No tasks match the selected deadline.
+                    </p>
+                </div>
+
+                <!-- Table Footer -->
+                <div class="table-footer d-flex flex-wrap justify-content-between align-items-center gap-3">
+
+                    <small class="text-secondary" id="paginationInfo"></small>
+
+                    <!-- JavaScript Pagination -->
+                    <nav aria-label="Tasks pagination">
+                        <ul class="pagination" id="pagination"></ul>
+                    </nav>
+
+                </div>
+
+            </div>
+
+            <!-- Server Pagination -->
+            <nav aria-label="Page navigation"
+                 class="d-flex justify-content-center align-items-center mt-4">
+
+                <ul class="pagination">
+
+                    <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                        <a class="page-link"
+                           href="/Task/Index?Page=@(ViewBag.CurrentPage - 1)">
+                            Previous
+                        </a>
+                    </li>
+
+                    @for (var i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                            <a class="page-link"
+                               href="/Task/Index?Page=@i">
+                                @i
+                            </a>
+                        </li>
+                    }
+
+                    <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                        <a class="page-link"
+                           href="/Task/Index?Page=@(ViewBag.CurrentPage + 1)">
+                            Next
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+
+            <!-- Page Footer Message -->
+            <div class="text-center mt-4 text-secondary small">
+                <i class="bi bi-shield-check me-1"></i>
+                Keep your tasks organized and never miss a deadline.
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="~/js/Task/index.js"></script>
+    @* SweetAlert(Delete) *@
+    <script>
+
+            function confirmDelete(event, element) {
+
+                // Stop the link from opening immediately
+                event.preventDefault();
+
+                // Get delete URL
+                const deleteUrl = element.href;
+
+
+                // SweetAlert with Bootstrap buttons
+                const swalWithBootstrapButtons = Swal.mixin({
+
+                    customClass: {
+                        confirmButton: "btn btn-success",
+                        cancelButton: "btn btn-danger"
+                    },
+
+                    buttonsStyling: false
+
+                });
+
+
+                // Confirmation Alert
+                swalWithBootstrapButtons.fire({
+
+                    title: "Are you sure?",
+
+                    text: "You won't be able to revert this!",
+
+                    icon: "warning",
+
+                    showCancelButton: true,
+
+                    confirmButtonText: "Yes, delete it!",
+
+                    cancelButtonText: "No, cancel!",
+
+                    reverseButtons: true
+
+                }).then((result) => {
+
+
+                    // If user confirms
+                    if (result.isConfirmed) {
+
+                        swalWithBootstrapButtons.fire({
+
+                            title: "Deleted!",
+
+                            text: "Your Task has been deleted.",
+
+                            icon: "success",
+
+                            showConfirmButton: false,
+
+                            timer: 1500
+
+                        }).then(() => {
+
+                            // Go to delete URL
+                            window.location.href = deleteUrl;
+
+                        });
+
+                    }
+
+
+                    // If user cancels
+                    else if (result.dismiss === Swal.DismissReason.cancel) {
+
+                        swalWithBootstrapButtons.fire({
+
+                            title: "Cancelled",
+
+                            text: "Your Task is safe.",
+
+                            icon: "error"
+
+                        });
+
+                    }
+
+                });
+
+            }
+
+    </script>
+</body>
+</html>

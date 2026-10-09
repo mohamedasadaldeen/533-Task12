@@ -1,0 +1,531 @@
+﻿
+/* =====================================
+   Main Page
+===================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+.tasks-page {
+    width: 100%;
+    min-height: 75vh;
+    padding: 40px 0 55px;
+    background: #f5f7fb;
+}
+
+/* Container: 80% of screen width */
+.tasks-container {
+    width: 80%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+
+/* =====================================
+   Page Heading
+===================================== */
+
+.page-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #172554;
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+    .page-heading > i {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        border-radius: 13px;
+        background: #e8efff;
+        color: #2563eb;
+        font-size: 1.4rem;
+    }
+
+.page-subtitle {
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+
+/* =====================================
+   Add Task Button
+===================================== */
+
+.btn-add-task {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 11px;
+    background: #2563eb;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
+    transition: all 0.2s ease;
+}
+
+    .btn-add-task:hover {
+        background: #1d4ed8;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 14px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn-add-task i {
+        font-size: 1rem;
+    }
+
+
+/* =====================================
+   Statistics Cards
+===================================== */
+
+.tasks-page .card:not(.task-card) {
+    min-width: 0;
+    border: 1px solid #edf0f5 !important;
+    border-radius: 16px !important;
+    background: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .tasks-page .card:not(.task-card):hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;
+    }
+
+.tasks-page .card-body > div:first-child {
+    width: 54px !important;
+    height: 54px !important;
+    flex-shrink: 0;
+    border-radius: 15px !important;
+}
+
+    .tasks-page .card-body > div:first-child i {
+        font-size: 1.4rem !important;
+    }
+
+
+/* =====================================
+   Main Table Card
+===================================== */
+
+.task-card {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #e8edf5;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 5px 22px rgba(15, 23, 42, 0.05);
+}
+
+
+/* =====================================
+   Search Toolbar
+===================================== */
+
+.task-toolbar {
+    padding: 22px 24px;
+    border-bottom: 1px solid #edf0f5;
+    background: #fff;
+}
+
+.search-input {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid #dbe3ef;
+    border-radius: 10px;
+}
+
+    .search-input:focus {
+        border-color: #93b4ff;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+.task-toolbar .btn {
+    min-height: 44px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+    .task-toolbar .btn i {
+        font-size: 1rem;
+        vertical-align: -1px;
+    }
+
+
+/* =====================================
+   Table Layout
+===================================== */
+
+.task-card .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.task-table {
+    width: 100%;
+    margin-bottom: 0;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+    /* Title */
+    .task-table th:nth-child(1),
+    .task-table td:nth-child(1) {
+        width: 19%;
+    }
+
+    /* Description */
+    .task-table th:nth-child(2),
+    .task-table td:nth-child(2) {
+        width: 31%;
+    }
+
+    /* Deadline */
+    .task-table th:nth-child(3),
+    .task-table td:nth-child(3) {
+        width: 22%;
+    }
+
+    /* File */
+    .task-table th:nth-child(4),
+    .task-table td:nth-child(4) {
+        width: 16%;
+    }
+
+    /* Actions */
+    .task-table th:nth-child(5),
+    .task-table td:nth-child(5) {
+        width: 12%;
+    }
+
+
+    /* =====================================
+   Table Header
+===================================== */
+
+    .task-table thead th {
+        padding: 17px 14px;
+        background: #f8fafc;
+        color: #64748b;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        white-space: nowrap;
+        border-bottom: 1px solid #e8edf5;
+    }
+
+
+    /* =====================================
+   Table Rows
+===================================== */
+
+    .task-table tbody td {
+        padding: 19px 14px;
+        vertical-align: middle;
+        color: #475569;
+        border-bottom: 1px solid #f0f2f7;
+        overflow-wrap: anywhere;
+    }
+
+    .task-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .task-table tbody tr {
+        transition: background-color 0.2s ease;
+    }
+
+        .task-table tbody tr:hover > td {
+            background: #f8faff;
+        }
+
+
+/* =====================================
+   Task Title and Description
+===================================== */
+
+.task-title {
+    margin-bottom: 0;
+    color: #1e293b;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.task-description {
+    display: -webkit-box;
+    max-width: 100%;
+    overflow: hidden;
+    color: #64748b;
+    font-size: 0.84rem;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+
+/* =====================================
+   Deadline
+===================================== */
+
+.deadline-cell {
+    overflow-wrap: normal !important;
+}
+
+.deadline-text {
+    color: #475569;
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.8;
+}
+
+    .deadline-text i {
+        margin-right: 3px;
+        font-size: 0.9rem;
+    }
+
+.deadline-warning {
+    color: #dc2626 !important;
+}
+
+.deadline-normal {
+    color: #475569;
+}
+
+/* Urgent or overdue row */
+.task-table tbody tr.deadline-danger > td {
+    background: #fff1f2;
+    color: #9f1239;
+}
+
+.task-table tbody tr.deadline-danger:hover > td {
+    background: #ffe4e6;
+}
+
+
+/* =====================================
+   File Links and Icons
+===================================== */
+
+.file-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 100%;
+    color: #2563eb;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+    .file-link i {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 38px;
+        flex-shrink: 0;
+        border: 1px solid #dbeafe;
+        border-radius: 9px;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 1.2rem;
+    }
+
+    .file-link:hover {
+        color: #1d4ed8;
+        text-decoration: underline;
+    }
+
+
+/* =====================================
+   Edit and Delete Buttons
+===================================== */
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    white-space: nowrap;
+}
+
+    .action-buttons .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        flex-shrink: 0;
+        padding: 0;
+        border-radius: 9px;
+        transition: all 0.2s ease;
+    }
+
+        .action-buttons .btn i {
+            font-size: 0.95rem;
+        }
+
+    .action-buttons .edit-button:hover {
+        color: #fff;
+        background: #2563eb;
+        transform: translateY(-2px);
+    }
+
+    .action-buttons .delete-button:hover {
+        color: #fff;
+        background: #dc3545;
+        transform: translateY(-2px);
+    }
+
+
+/* =====================================
+   Empty Search Result
+===================================== */
+
+.table-empty {
+    padding: 55px 20px !important;
+    color: #94a3b8 !important;
+    text-align: center;
+}
+
+    .table-empty > i {
+        color: #94a3b8;
+    }
+
+
+/* =====================================
+   Pagination Footer
+===================================== */
+
+.table-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 24px;
+    background: #fff;
+    border-top: 1px solid #edf0f5;
+}
+
+.pagination {
+    gap: 5px;
+    margin-bottom: 0;
+}
+
+    .pagination .page-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 36px;
+        min-height: 36px;
+        border: none;
+        border-radius: 9px;
+        color: #475569;
+    }
+
+    .pagination .active .page-link {
+        background: #2563eb;
+        color: #fff;
+    }
+
+    .pagination .disabled .page-link {
+        color: #cbd5e1;
+    }
+
+
+/* =====================================
+   Page Footer Message
+===================================== */
+
+.tasks-page .text-center.mt-4 > i {
+    color: #16a34a;
+    font-size: 1rem;
+}
+
+
+/* =====================================
+   Responsive Layout
+===================================== */
+
+@media (max-width: 1200px) {
+    .tasks-container {
+        width: 90%;
+    }
+
+    .task-table {
+        min-width: 850px;
+    }
+}
+
+@media (max-width: 768px) {
+    .tasks-container {
+        width: 95%;
+    }
+
+    .tasks-page {
+        padding-top: 25px;
+    }
+
+    .page-heading {
+        font-size: 1.6rem;
+    }
+
+    .task-toolbar {
+        padding: 18px;
+    }
+
+    .table-footer {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tasks-container {
+        width: 100%;
+        padding: 0 12px;
+    }
+
+    .page-heading {
+        font-size: 1.45rem;
+    }
+
+        .page-heading > i {
+            width: 38px;
+            height: 38px;
+            font-size: 1.2rem;
+        }
+
+    .page-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .btn-add-task {
+        width: 100%;
+    }
+
+    .task-toolbar {
+        padding: 15px;
+    }
+
+    .table-footer {
+        padding: 14px;
+    }
+}

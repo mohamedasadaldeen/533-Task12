@@ -1,0 +1,151 @@
+/* =========================
+   Global Settings
+========================= */
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8fafc;
+    color: #1e293b;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================
+   Bootstrap Focus
+========================= */
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem #ffffff, 0 0 0 0.25rem #258cfb;
+}
+
+/* =========================
+   Header / Navbar
+========================= */
+
+.navbar {
+    position: relative;
+    z-index: 1000;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 16px 0;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #2563eb !important;
+    text-decoration: none;
+}
+
+    .navbar-brand i {
+        margin-right: 8px;
+    }
+
+.navbar .nav-link {
+    color: #475569;
+    font-weight: 600;
+    padding: 10px 16px !important;
+    border-radius: 10px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+    .navbar .nav-link:hover,
+    .navbar .nav-link.active {
+        background-color: #eff6ff;
+        color: #2563eb;
+    }
+
+/* =========================
+   Main Content
+========================= */
+
+main {
+    flex: 1 0 auto;
+    width: 100%;
+}
+
+/* =========================
+   Footer
+========================= */
+
+.footer {
+    flex-shrink: 0;
+    margin-top: auto;
+    padding: 22px 0;
+    background-color: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+    text-align: center;
+}
+
+    .footer a {
+        color: #2563eb;
+        text-decoration: none;
+    }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+/* =========================
+   Forms
+========================= */
+
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+/* =========================
+   Responsive Navbar
+========================= */
+
+@media (max-width: 767.98px) {
+    .navbar {
+        padding: 12px 0;
+    }
+
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+
+    .navbar .nav-link {
+        padding: 10px 12px !important;
+    }
+}
+
